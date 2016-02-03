@@ -25,11 +25,10 @@
   </head>
 
   <body ng-controller="SongController">
-    {{songs.songs}}
     <div ng-repeat="song in songs">
-      <h1>{{song.data.title}}</h1>
-      <p>{{song.data.url}}</p>
-      <iframe width="100%" height="166" scrolling="no" frameborder="no" ng-src="{{song.data.url}}"></iframe>
+
+      <h1>{{song[0].data.title}}</h1>
+      <iframe width="100%" height="166" scrolling="no" frameborder="no" ng-src="{{song[0].data.url}}"></iframe>
 
     </div>
 

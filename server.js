@@ -1,22 +1,24 @@
 var express = require("express");
 var r = require("nraw");
+var bodyParser = require("body-parser");
 
 var reddit = new r("lolbot");
 
 var app = express();
 
-// Use public folder
+// Middleware
 app.use(express.static(__dirname+"/public/"));
+app.use(bodyParser());
 
 // Homepage route
 app.get("/",function(req,res){
   res.sendFile(__dirname+"/public/index.html");
 });
 
-app.get("/api/songs",function(req,res){
+app.post("/api/songs/",function(req,res){
 
-  reddit.search("subreddit:hiphopheads site:soundcloud.com").from("week").sort("top").exec(function(data){
-    console.log(data.data.children[0].data.url);
+  reddit.search("subreddit:"+String(req.body.sub)+" site:soundcloud.com "+String(req.body.flair)).from("day").sort("hot").limit(1).exec(function(data){
+
 
     for(var i=0;i<data.data.children.length;i++){
       data.data.children[i].data.url = "https://w.soundcloud.com/player/?url="+data.data.children[i].data.url;
@@ -25,6 +27,8 @@ app.get("/api/songs",function(req,res){
     res.send(data.data.children);
 
   });
+
+
 
 });
 
