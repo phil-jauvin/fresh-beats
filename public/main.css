@@ -1,5 +1,9 @@
-.fa:hover{
+.fa-5x{
   color:rgb(255, 103, 0);
+}
+
+.fa-5x:hover{
+  color:lightsalmon;
 }
 
 .navbar-toggle{
@@ -9,4 +13,18 @@
 
 .container{
   margin-top:100px;
+}
+
+body {
+  position: relative;
+}
+
+.affix {
+    top:0;
+    width: 100%;
+    z-index: 9999;
+}
+
+.col-xs-5{
+  text-align: center;
 }

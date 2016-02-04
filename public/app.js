@@ -4,7 +4,7 @@ var app = angular.module("beats",["ng","infinite-scroll"]).config(function($sceP
 
 app.controller("SongController",["$scope","$http",function($scope,$http){
 
-  $scope.sortBy = "data.score";
+  $scope.sortBy = "-data.score";
   $scope.displayLimit = 8;
 
   $scope.sort = function(predicate){
@@ -35,6 +35,8 @@ app.controller("SongController",["$scope","$http",function($scope,$http){
     for(element of res){
       $scope.songs.push(element);
     }
+
+    console.log($scope.songs[0]);
 
   });
 
