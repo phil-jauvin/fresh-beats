@@ -1,3 +1,12 @@
 .fa:hover{
   color:rgb(255, 103, 0);
 }
+
+.navbar-toggle{
+  float:left;
+  margin-left:10px;
+}
+
+.container{
+  margin-top:100px;
+}

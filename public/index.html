@@ -19,17 +19,18 @@
     <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="infinite-scroll.min.js"></script>
     <script src="app.js"></script>
 
   </head>
 
   <body ng-controller="SongController">
 
-    <nav class="navbar navbar-default navbar-fixed" style="max-width:100vw">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
 
         <div class="navbar-header">
-          <button style="float:right" type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -38,19 +39,19 @@
 
         <div class="collapse navbar-collapse" id="navbar">
           <ul class="nav navbar-nav">
-            <li><a href="" ng-click="sort('data.score')"><h4>Top</h4></a></li>
-            <li><a href="" ng-click="sort('data.created')"><h4>New</h4></a></li>
+            <li ng-class="{active:sortBy === 'data.score'}"><a href="" ng-click="sort('data.score')"><h4>Top</h4></a></li>
+            <li ng-class="{active:sortBy === 'data.created'}"><a href="" ng-click="sort('data.created')"><h4>New</h4></a></li>
           </ul>
         </div>
 
-    </div>
-  </nav>
+      </div>
+    </nav>
 
-    <div class="container">
+    <div class="container" infinite-scroll="more()" infinite-scroll-distance="0.1" infinite-scroll-disabled="checkLoaded()">
 
       <div class="row">
 
-        <div ng-repeat="song in songs | orderBy: sortBy | limitTo: 8 ">
+        <div ng-repeat="song in songs | orderBy: sortBy | limitTo: displayLimit">
 
           <div class="col-sm-5 col-sm-offset-1 col-xs-12 well">
 
