@@ -4,25 +4,22 @@ var app = angular.module("beats",["ng","infinite-scroll"]).config(function($sceP
 
 app.controller("SongController",["$scope","$http",function($scope,$http){
 
+  // --- Let's initialise some variables ---
+
+  // default sorting by score
   $scope.sortBy = "-data.score";
-  $scope.displayLimit = 8;
 
-  $scope.sort = function(predicate){
-    $scope.displayLimit = 8;
-    $scope.sortBy = predicate;
-  }
+  // Multiplier is the amount of tracks we load everytime we call load()
+  $scope.multiplier = 4;
+  $scope.displayLimit = $scope.multiplier;
 
-  $scope.more = function(){
-    $scope.displayLimit += 8;
-  }
-
-  $scope.checkLoaded = function(){
-    return ($scope.displayLimit > 100);
-  }
-
+  // Contains all the posts we fetch from reddit
   $scope.songs = [];
 
 
+  // --- functions ---
+
+  // Embeds soundcloud widgets
   $scope.load = function(){
 
     function embed(song){
@@ -30,7 +27,7 @@ app.controller("SongController",["$scope","$http",function($scope,$http){
       SC.oEmbed(song.data.url, {
         auto_play: false
       }).then(function(embed){
-        console.log(song.data.id,embed.html);
+        //console.log(song.data.id,embed.html);
         $("#"+song.data.id).html(embed.html);
         //console.log('oEmbed response: ', embed);
       });
@@ -38,12 +35,34 @@ app.controller("SongController",["$scope","$http",function($scope,$http){
     }
 
     for(song of $scope.songs){
-      embed(song);
+
+      if ( $("#"+song.data.id).children().length == 0 ){
+        embed(song);
+      }
+
     }
 
   }
 
+  // Changes what we sort by
+  $scope.sort = function(predicate){
+    $scope.displayLimit = $scope.multiplier;
+    $scope.sortBy = predicate;
+  }
 
+  // Called when user scrolls to the bottom
+  $scope.more = function(){
+    $scope.displayLimit += $scope.multiplier;
+    $scope.load();
+  }
+
+  // Called to check when to stop loading more posts
+  $scope.checkLoaded = function(){
+    return ($scope.displayLimit > 100);
+  }
+
+
+  // --- Code to run when the page loads ---
 
   $http.post("/api/songs/",{sub:"listentothis",flair:"flair:Hip-hop",limit:50}).success(function(res){
 
@@ -59,10 +78,9 @@ app.controller("SongController",["$scope","$http",function($scope,$http){
       $scope.songs.push(element);
     }
 
-    console.log($scope.songs[0]);
+    //console.log($scope.songs[0]);
 
     $scope.load();
-
 
   });
 

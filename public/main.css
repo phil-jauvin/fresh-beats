@@ -28,3 +28,7 @@ body {
 .col-xs-5{
   text-align: center;
 }
+
+iframe{
+  max-height: 400px;
+}
