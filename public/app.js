@@ -22,6 +22,29 @@ app.controller("SongController",["$scope","$http",function($scope,$http){
 
   $scope.songs = [];
 
+
+  $scope.load = function(){
+
+    function embed(song){
+
+      SC.oEmbed(song.data.url, {
+        auto_play: false
+      }).then(function(embed){
+        console.log(song.data.id,embed.html);
+        $("#"+song.data.id).html(embed.html);
+        //console.log('oEmbed response: ', embed);
+      });
+
+    }
+
+    for(song of $scope.songs){
+      embed(song);
+    }
+
+  }
+
+
+
   $http.post("/api/songs/",{sub:"listentothis",flair:"flair:Hip-hop",limit:50}).success(function(res){
 
     for(element of res){
@@ -37,6 +60,9 @@ app.controller("SongController",["$scope","$http",function($scope,$http){
     }
 
     console.log($scope.songs[0]);
+
+    $scope.load();
+
 
   });
 
