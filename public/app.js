@@ -24,13 +24,21 @@ app.controller("SongController",["$scope","$http",function($scope,$http){
 
     function embed(song){
 
+      // oEmbed() returns a promise
+
       SC.oEmbed(song.data.url, {
         auto_play: false
       }).then(function(embed){
+
+        // Sucess: embed the widget in the proper div
+
         //console.log(song.data.id,embed.html);
         $("#"+song.data.id).html(embed.html);
         //console.log('oEmbed response: ', embed);
       }).catch(function(){
+
+        // Failure: we can't get the track for some reason so just delete the parent element
+
         //console.log("removing","#"+song.data.id);
         $("#"+song.data.id).parent().remove();
       });
@@ -47,7 +55,7 @@ app.controller("SongController",["$scope","$http",function($scope,$http){
 
   }
 
-  // Changes what we sort by
+  // Changes what we sort by and resets the amount of players loaded
   $scope.sort = function(predicate){
     $scope.displayLimit = $scope.multiplier;
     $scope.sortBy = predicate;

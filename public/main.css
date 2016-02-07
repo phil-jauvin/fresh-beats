@@ -20,9 +20,9 @@ body {
 }
 
 .affix {
-    top:0;
-    width: 100%;
-    z-index: 9999;
+  top:0;
+  width: 100%;
+  z-index: 9999;
 }
 
 .col-xs-5{
