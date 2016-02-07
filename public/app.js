@@ -30,6 +30,9 @@ app.controller("SongController",["$scope","$http",function($scope,$http){
         //console.log(song.data.id,embed.html);
         $("#"+song.data.id).html(embed.html);
         //console.log('oEmbed response: ', embed);
+      }).catch(function(){
+        //console.log("removing","#"+song.data.id);
+        $("#"+song.data.id).parent().remove();
       });
 
     }
