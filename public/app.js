@@ -59,6 +59,7 @@ app.controller("SongController",["$scope","$http",function($scope,$http){
   $scope.sort = function(predicate){
     $scope.displayLimit = $scope.multiplier;
     $scope.sortBy = predicate;
+    $scope.load();
   }
 
   // Called when user scrolls to the bottom
